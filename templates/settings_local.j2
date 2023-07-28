@@ -1,0 +1,207 @@
+from django.utils.translation import ugettext_lazy as _
+
+DEBUG = {{ settings_debug }}
+#secret key
+SECRET_KEY = '{{ settings_secret_key }}'
+
+#allowed host
+ALLOWED_HOSTS = ['{{ pod_host }}']
+
+FILE_UPLOAD_PERMISSIONS = 0o644
+
+#database
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '{{ hostvars[groups['dbservers'][0]].postgresql_databases[0].name}}',
+        'USER': '{{ hostvars[groups['dbservers'][0]].postgresql_users[0].name}}',
+        'PASSWORD': '{{ hostvars[groups['dbservers'][0]].postgresql_users[0].password}}',
+        'HOST': '{{ hostvars[groups['dbservers'][0]].inventory_hostname}}',
+        'PORT': '5432',
+    }
+}
+
+
+#mail
+EMAIL_HOST = '{{ settings_smtp_host }}'
+EMAIL_PORT = 25
+DEFAULT_FROM_EMAIL = '{{ settings_smtp_default_email }}'
+SERVER_EMAIL = '{{ settings_smtp_default_email }}'
+
+#admins
+ADMINS = ( {{ settings_admins }}  )
+
+#timezone
+TIME_ZONE = 'Europe/Paris'
+
+#celery
+CELERY_NAME = "pod_project"
+CELERY_BACKEND = "amqp"
+CELERY_TO_ENCODE = {{ settings_enable_celery }}
+CELERY_BROKER_URL = "amqp://{{ hostvars[groups['rabbitmq'][0]].rabbitmq_user}}:{{ hostvars[groups['rabbitmq'][0]].rabbitmq_password}}@{{ hostvars[groups['rabbitmq'][0]].ansible_default_ipv4.address }}/{{ hostvars[groups['rabbitmq'][0]].rabbitmq_vhost }}"            
+
+
+#ldap
+AUTH_TYPE = (('local', _('local')), ('CAS', 'CAS')) 
+USE_CAS = {{ settings_use_cas }}
+CAS_GATEWAY = {{ cas_gateway }}
+POPULATE_USER = '{{ populate }}'
+#CREATE_GROUP_FOM_AFFILIATION = False
+CAS_SERVER_URL = '{{ cas_url }}'
+LDAP_SERVER = {'url': '{{ ldap_serveur }}', 'port': {{ldap_port}}, 'use_ssl': {{ldap_ssl}}}
+AFFILIATION = {{ affiliation }}
+USER_LDAP_MAPPING_ATTRIBUTES = {{ mapping }}
+AUTH_LDAP_USER_SEARCH = {{ ldap_user_search }}
+AUTH_LDAP_BASE_DN ='{{ base_dn }}' 
+AUTH_LDAP_BIND_DN = '{{ bind_dn }}'
+AUTH_LDAP_BIND_PASSWORD = '{{ bind_pwd }}'
+
+
+BASE_DIR = '{{ django_path }}/pod'
+FROM_URL = '{{ from_url }}'
+
+#restrict edit video
+RESTRICT_EDIT_VIDEO_ACCESS_TO_STAFF_ONLY = {{ restrict_edit_video }}
+
+VIDEO_MAX_UPLOAD_SIZE = {{ video_max_upload_size }}
+ 
+FILE_ALLOWED_EXTENSIONS = {{ file_allowed_ext }}
+IMAGE_ALLOWED_EXTENSIONS = {{ image_allowed_ext }}
+FILE_MAX_UPLOAD_SIZE = {{ file_max_upload_size }}
+ 
+##
+# THIRD PARTY APPS OPTIONNAL
+#
+#use pod file
+H5P_ENABLED = False
+USE_PODFILE = {{ settings_use_podfile }}
+THIRD_PARTY_APPS = ['live', 'enrichment', ]
+
+LANGUAGE_CODE = 'fr'
+LANGUAGES = (
+    ('fr', 'Français'),
+    ('en', 'English')
+)
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'fr'
+MODELTRANSLATION_FALLBACK_LANGUAGES = ('fr', 'en')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '{{ media_path }}'
+ 
+FILE_UPLOAD_TEMP_DIR = '/var/tmp'
+
+MENUBAR_SHOW_STAFF_OWNERS_ONLY = True
+HOMEPAGE_SHOWS_RESTRICTED = True
+
+#elastic search en local donc pas besoin de preciser l'url
+#ES_URL = ['http://{{ hostvars[groups['elasticsearch'][0]].inventory_hostname }}:9200/']
+
+FFMPEG = '/usr/bin/ffmpeg'
+FFPROBE = '/usr/bin/ffprobe'
+
+BASE_URL = 'https://{{ pod_host }}'
+
+ 
+SUBJECT_CHOICES = ( ('', '-----'), ('info', _('Request more information')), ('request_password', _('Password request for a video')), ('inappropriate_content', _('Report inappropriate content')),
+('bug', _('Correction or bug report')), ('other', _('Other (please specify)')) )
+ 
+{% if install_ssl == true  %}
+
+#######################
+# https               #
+#######################
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+{% endif %}
+
+
+#######################
+# Custom cursus codes #
+#######################
+
+CURSUS_CODES = ( 
+    ('0', ("Autres / Other")), 
+    ('C', ("Conférence")), 
+    ('D', ("Diplôme universitaire")), 
+    ('1', ("Licence 1ère année")), 
+    ("2", ("Licence 2ème année")),
+    ("3", ("Licence 3ème année")),
+    ("4", ("Master 1ère année")),
+    ("5", ("Master 2ème année")),
+    ("6", ("Doctorat")) 
+
+)
+
+
+{% if install_custom == true  %}
+
+##########################
+# templates              #
+##########################
+
+TEMPLATES = [{
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': ['{{ django_path }}/{{ custom_path }}/templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+                'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'pod.main.context_processors.context_settings',
+                'pod.main.context_processors.context_navbar',
+
+                                      ],
+                  },
+             },
+            ]
+
+
+TEMPLATE_VISIBLE_SETTINGS = {
+
+    'TITLE_SITE': '{{ custom_title }}',
+    'TITLE_ETB': 'Université de Strasbourg',
+    'LOGO_SITE': 'img/uds-logo.png',
+    'LOGO_COMPACT_SITE': 'img/uds-petit.png',
+    'LOGO_ETB': 'img/uds-grand.png',
+    'LOGO_PLAYER': 'img/uds.png',
+    'FOOTER_TEXT': ('',),
+    'FAVICON': 'img/logoPod.svg',
+    'LINK_PLAYER': 'https://unistra.fr',
+    'CSS_OVERRIDE': 'css/unistrapod.css',
+    'BOOTSTRAP_CUSTOM': '',
+    'PRE_HEADER_TEMPLATE': ''
+}
+
+
+{% endif %}
+
+{% if install_ftp == true  %}
+
+# Recorder settings
+#
+ALLOW_MANUAL_RECORDING_CLAIMING = True
+ALLOW_RECORDER_MANAGER_CHOICE_VID_OWNER = True
+DEFAULT_RECORDER_ID = 1
+DEFAULT_RECORDER_PATH = '{{ ftp_path }}'
+DEFAULT_RECORDER_TYPE_ID = 2
+#DEFAULT_RECORDER_USER_ID = 1 #pour que 'admin puisse revendiquer la video
+RECORDER_SKIP_FIRST_IMAGE = False
+RECORDER_TYPE =(('video', ('Video')), ('audiovideocast', ('Audiovideocast')),)
+USE_RECORD_PREVIEW = True
+PUBLIC_RECORD_DIR = 'records'
+SELF_REQUESTS_PROXIES = { "http": None, "https": None}
+ALLOW_INSECURE_REQUESTS = True
+
+{% endif %}
+
+
+
+
+
+

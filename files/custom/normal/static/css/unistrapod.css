@@ -1,0 +1,158 @@
+body {
+  font-size: 1.2rem;
+}
+@media (min-width: 576px) {
+.card,
+.card-header,
+.card-img-top {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-radius: 0 !important;
+}
+.card-group >.card:only-child {
+    border-radius: 0 !important;
+}
+
+/** Bootstrap override **/
+.card-group > .card {
+    width:20%;
+    min-width:20%;
+
+}
+
+.mw-20 {
+    max-width:20%;
+}
+
+/** Ajout EL **/
+.btn {
+    border-radius: 0 !important;
+}
+
+.btn-group-sm > .btn, .btn-sm {
+  border-radius: 0 !important;
+}
+
+.btn-group-sm > .btn, .btn-sm:hover {
+    background-color: #208f80 !important;
+    border-color: #111111 !important;
+}
+
+.btn-primary {
+
+    color: #fff;
+    background-color: #208f80 !important;
+    border-color: #208f80;
+
+}
+
+.form-control {
+  border-radius: 0 !important;
+}
+
+.navbar-expand-lg {
+  box-shadow: 0 2px 4px rgba(0,0,0,.2) !important;
+}
+.h1, h1 {
+  font-size: 1.5rem !important;
+}
+
+:root {
+   --primary: #208f80;
+   --link-color: #208f80;
+   --activelink-color: #108f70;
+   --font-family-sans-serif: 'Unistra A';
+}
+
+/*body > footer > .container-pod > .row > div {background-color:#443a31;}*/
+}
+
+@font-face {
+	font-family:'Unistra A';
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=eyK5QLe8Yb94jLPymqhGgFsCsDw%3D&Expires=1870941572');
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=eyK5QLe8Yb94jLPymqhGgFsCsDw%3D&Expires=1870941572&#iefix') format('embedded-opentype'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=Jea6IDcLJc%2Fua6f%2BWy%2FOmXn6Ajs%3D&Expires=1870941572') format('woff2'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=GssI%2Ba%2FJ%2FOxebj1VUX1jBXuGJgw%3D&Expires=1870941572') format('woff'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=bhAcWT21YGtlrFHCZzul%2BWvPLlw%3D&Expires=1870941571') format('svg');
+	font-weight: 400;
+	font-style: italic;
+}
+
+@font-face {
+	font-family:'Unistra A';
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=7jfdHGloNOE3QZ0yiqGES4eTCRk%3D&Expires=1870941572');
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=7jfdHGloNOE3QZ0yiqGES4eTCRk%3D&Expires=1870941572&#iefix') format('embedded-opentype'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=Jc877H2QWC8nCT9%2BvglLY8jj54Q%3D&Expires=1870941570') format('woff2'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=76jAZD8ftu7ItXYNf2Gnvb91uXI%3D&Expires=1870941571') format('woff'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=DthzEcdekNlkte5hDjh9lwx5u1A%3D&Expires=1870941571') format('svg');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family:'Unistra A';
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=1gOXHxJTf4QJ3AwNQpN1mjyOM0U%3D&Expires=1870941570');
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=1gOXHxJTf4QJ3AwNQpN1mjyOM0U%3D&Expires=1870941570&#iefix') format('embedded-opentype'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=uONFy1Gtrvo3vrbCQP37Bc2atEY%3D&Expires=1870941571') format('woff2'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=oyyzgxDngRBJjMPsLJg62RBP%2Fvk%3D&Expires=1870941572') format('woff'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=Em9iPpSQSww%2BfpxeOJWKpolAYpk%3D&Expires=1870941573') format('svg');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family:'Unistra A';
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=0hdoRUmK2GWCFwgkBIC%2FzcM0mTU%3D&Expires=1870941572');
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=0hdoRUmK2GWCFwgkBIC%2FzcM0mTU%3D&Expires=1870941572&#iefix') format('embedded-opentype'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=3C0NBMngVe5yjiZNTLk%2Bbph%2Bu7A%3D&Expires=1870941571') format('woff2'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=s7FFr4ay6BjLInzTzkdOwplP0y8%3D&Expires=1870941571') format('woff'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=86wby3SaqHho80Mq3ctGyCLKxFU%3D&Expires=1870941571') format('svg');
+	font-weight: 700;
+	font-style: italic;
+}
+
+@font-face {
+	font-family:'Unistra C';
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Italic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=haGQs9PpcqvooUDPGHTtI%2FySj2E%3D&Expires=1870941572');
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Italic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=haGQs9PpcqvooUDPGHTtI%2FySj2E%3D&Expires=1870941572&#iefix') format('embedded-opentype'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Italic.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=2Wexx6M3zsFJSjFJ9yyhq9QFk9E%3D&Expires=1870941571') format('woff2'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Italic.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=56YjTJZsMUaD2%2BlSWs4sCKfAMZ8%3D&Expires=1870941571') format('woff'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Italic.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=HdplKJq7WB4PfbUlwWwdf9Y7y4M%3D&Expires=1870941570') format('svg');
+	font-weight: 400;
+	font-style: italic;
+}
+
+@font-face {
+	font-family:'Unistra C';
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Regular.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=wBgFzz6cHJ%2Fowy80ol3M0Lym8yI%3D&Expires=1870941571');
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Regular.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=wBgFzz6cHJ%2Fowy80ol3M0Lym8yI%3D&Expires=1870941571&#iefix') format('embedded-opentype'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Regular.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=MCbAEyBp26TsJJFiZlHXeR%2Fgb48%3D&Expires=1870941573') format('woff2'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Regular.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=AzOrP70onMWa0n1KRgXhc%2BY2T34%3D&Expires=1870941571') format('woff'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Regular.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=9t70crRlAxUbywxPuZhpoIaSU6c%3D&Expires=1870941572') format('svg');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family:'Unistra C';
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Bold.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=naGQqgn4KEgPQnzUhrgVon%2FWPuM%3D&Expires=1870941572');
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Bold.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=naGQqgn4KEgPQnzUhrgVon%2FWPuM%3D&Expires=1870941572&#iefix') format('embedded-opentype'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Bold.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=It5%2FuaV6ci3GtCiMla7my1AINjM%3D&Expires=1870941570') format('woff2'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Bold.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=bnqMFMTxS09Pl%2FFXnojL5O9Rbxs%3D&Expires=1870941571') format('woff'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-Bold.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=OcoIenX%2B4sW3t9%2FVAYrqBEeHQSo%3D&Expires=1870941571') format('svg');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family:'Unistra C';
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-BoldItalic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=HD%2Bvn3CEhvX%2FW903ZE27Nz4iahc%3D&Expires=1870941573');
+	src:	url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-BoldItalic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=HD%2Bvn3CEhvX%2FW903ZE27Nz4iahc%3D&Expires=1870941573&#iefix') format('embedded-opentype'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-BoldItalic.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=v%2FnSCrQ1IcV4RbZKrWbxZuRWH9g%3D&Expires=1870941572') format('woff2'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-BoldItalic.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=N59rC3hJJCFPQvsRR%2FuR9fwYYVI%3D&Expires=1870941572') format('woff'),
+			url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraC-BoldItalic.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=hG4Bws8dxvM7zkD2TJ7hgq57ER0%3D&Expires=1870941570') format('svg');
+	font-weight: 700;
+	font-style: italic;
+}

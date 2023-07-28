@@ -1,0 +1,35 @@
+- name: logrotate
+  hosts: webservers
+  remote_user: root
+  roles:
+    - logrotate
+  vars:
+    logrotate_applications:
+      - name: uwsgi-pod.log
+        definitions:
+          - logs:
+            - '{{django_path}}/uwsgi/uwsgi-pod.log'
+            options:
+              - su pod pod
+              - size 10M
+              - rotate 3
+              - compress
+              - copytruncate
+              - notifempty
+              - missingok
+      - name: django.log
+        definitions:
+          - logs:
+            - '{{django_path}}/pod/log/django.log'
+            options:
+              - su pod pod
+              - size 10M
+              - rotate 3
+              - compress
+              - copytruncate
+              - notifempty
+              - missingok
+
+
+
+

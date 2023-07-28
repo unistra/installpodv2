@@ -1,0 +1,49 @@
+---
+- hosts: node_exporters
+  remote_user: root
+  gather_facts: no
+  vars:
+    node_exporter_version: 0.18.0
+    node_exporter_url: https://github.com/prometheus/node_exporter/releases/download/v<VERSION>/node_exporter-<VERSION>.linux-amd64.tar.gz
+  tasks:
+  - name: Retrieve node exporter
+    unarchive:
+      src: "{{ node_exporter_url|regex_replace('<VERSION>', node_exporter_version) }}"
+      dest: /tmp/
+      remote_src: yes
+      extra_opts:
+      - node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter
+    register: unarchive
+
+  - name: Copy binary
+    when: unarchive.changed
+    command: >-
+      cp
+      /tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter
+      /usr/local/bin/node_exporter
+
+  - name: Create systemd unit
+    copy:
+      dest: /etc/systemd/system/node_exporter.service
+      content: |
+        [Unit]
+        Description=Node Exporter
+        Wants=network-online.target
+        After=network-online.target
+
+        [Service]
+        #User=node_exporter
+        #Group=node_exporter
+        Type=simple
+        ExecStart=/usr/local/bin/node_exporter
+
+        [Install]
+        WantedBy=multi-user.target
+    register: service
+
+  - name: Reload systemd
+    when: service.changed
+    systemd: { daemon_reload: yes }
+
+  - name: Start exporter
+    service: { name: node_exporter, state: started }

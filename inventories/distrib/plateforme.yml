@@ -1,0 +1,172 @@
+all:
+  children:
+    dbservers:
+      hosts:
+        <bddserver>:
+      vars:
+        ansible_ssh_common_args: -J {{ user_bastion }}@bastion-dnum.di.unistra.fr
+        postgresql_restarted_state: "restarted"
+        postgresql_service_state: started
+        postgresql_service_enabled: true
+        postgresql_global_config_options:
+          - option: listen_addresses
+            value: '*'
+        postgresql_hba_entries:
+          - { type: local, database: all, user: postgres, auth_method: peer }
+          - { type: local, database: all, user: all, auth_method: trust }
+        postgresql_databases:
+          - name: <databasename>
+        postgresql_users:
+          - name: <databaseuser>
+            db: <databasename>
+            password: <databaseuserpassword>
+
+    elasticsearch:
+      hosts:
+        <elsticseachserver>:
+      vars:
+        ansible_ssh_common_args: -J {{ user_bastion }}@bastion-dnum.di.unistra.fr
+        elasticsearch_version: '7.x'
+        elasticsearch_service_state: started
+        elasticsearch_service_enabled: true
+        elasticsearch_network_host: 0.0.0.0
+        elasticsearch_http_port: 9200
+        elasticsearch_package_state: latest
+        elasticsearch_package: elasticsearch
+        elasticsearch_heap_size_min: 2g
+        elasticsearch_heap_size_max: 2g
+        java_packages:
+          - openjdk-11-jdk
+        elasticsearch_extra_options: |  # Dont forget the pipe!
+          discovery.seed_hosts: ['127.0.0.1','{{ inventory_hostname }}']
+          cluster.initial_master_nodes: ["pod-1"]
+          node.name: pod-1
+          cluster.name: pod-application
+          xpack.security.enabled: false
+    rabbitmq:
+      hosts:
+        <rabbitmqserver>:
+      vars:
+        ansible_ssh_common_args: -J {{ user_bastion }}@bastion-dnum.di.unistra.fr
+        rabbitmq_daemon: rabbitmq-server
+        rabbitmq_state: started
+        rabbitmq_enabled: true
+        rabbitmq_user: pod
+        rabbitmq_password: <rabbitmqpassword>
+        rabbitmq_vhost: rabbitpod
+        rabbitmq_version: "3.8.8"
+        rabbitmq_deb_url: "https://packagecloud.io/rabbitmq/rabbitmq-server/packages/ubuntu/disco/rabbitmq-server_3.8.8-1_all.deb/download"
+    webservers:
+      hosts:
+        <backendserver>:
+      vars:
+        ansible_ssh_common_args: -J {{ user_bastion }}@bastion-dnum.di.unistra.fr
+    encodeservers:
+      hosts:
+        <encoderserver>:
+      vars:
+        ansible_ssh_common_args: -J {{ user_bastion }}@bastion-dnum.di.unistra.fr
+    streamingservers:
+      hosts:
+        <streamingserver>:
+      vars:
+        ansible_ssh_common_args: -J {{ user_bastion }}@bastion-dnum.di.unistra.fr
+
+    hpcserver:
+      hosts:
+        <hpcserver>:
+
+
+  vars:
+    pythonv: python3
+    group: pod
+    user: pod
+    userpasswd: <userpassword>
+    root_path: /django/www/{{ user }}
+    venv_path: /django/www/{{ user }}/.virtualenvs
+    venv: django_pod
+    django_path_root: /django
+    django_path: "{{ root_path }}/django_projects"
+    pod_host: <podhost>
+    pod_host_alias: <podhostalias>
+    pod_host_ip: '<loadbalancerip>' #ip du load balancer
+    #settings
+    settings_debug: False #or True
+
+    settings_secret_key: <secretkey>
+    settings_smtp_host: <smtphost>
+    settings_smtp_default_email: '<smtpdefaultemail>'
+    settings_admins: "<listedesadmins>"
+    settings_enable_celery: True #or False
+    restrict_edit_video: False 
+    superuser: admin
+    mail_superuser: <superuseremailadress>
+    mail_second_admin: <adminseconduser> #mail de l'installateur
+
+    #import
+    from_url: #pour la migrationpodv1
+
+    #nfs dir
+    install_nfs_server: false #a true si on veut installer un serveur nfs
+    nfs_dir: /nfs/podv2
+    media_path: /nfs/podv2/media
+    media_path_root: /nfs
+    file_upload_temp_dir: /nfs/temp
+
+    #certificats ssl
+    install_ssl: true #ne pas oublier de lancer le tag ssl, on est en https
+
+    #custom de l'appli
+    install_custom: true #lancer le tag custom
+    custom_type: 'normal' #Le type de custom 'normal' ou 'streaming'
+    custom_title: ''
+
+    #install ftp
+    install_ftp: false  #lancer le tag ftp
+    ftp_path: "{{ media_path }}/uploads"
+    ftp_user: "vsftpd"
+    ftp_group: "vsftpd"
+
+
+    #git
+    version_esup: '2.9.3' #repertoire du fichier de settings
+    version_install: '2.9.1.2-1' #<version de pod>-<versionunistra>
+    #version_update: '2.8.3.1'
+    version_update: '2.9.3-8'
+    backup_directory: /nfs/podv2/backup
+    leader: <backendserver> #execution de mise a jour base sur un seul serveur
+    custom_path: pod/custom
+
+    #bbb
+    use_bbb: false
+    default_bbb_plugin_root: '/home/pod/recorder'
+    bbb_plugin_directory: 'bbb-recorder'
+    default_bbb_path: '/nfs/podv2/bbb-recorder'
+    bbb_server_url: 'https://bbb-prod-rp.unistra.fr/'
+    bbb_secret_key: <bbbsecretkey>
+    default_bbb_type_id: 1
+    bbb_days_delete: 90
+
+    ##rabbitmpq
+    rabbitmq_ip: <rabbitmqip>
+    nfsserver_ip: <nfsserveurip>
+
+    #install_remote gpu
+    install_remote: true
+    remote_user: pod
+    remote_group: <podgroup>
+    remote_user_home: "<pathuserpodhome>"
+    remote_host: <serveurgpu>
+    remote_key: /home/pod/.ssh/id_ed25519
+    remote_cmd: "{{ encode_path }}/submit.sh"
+    encode_path: "{{ remote_user_home }}/encodage_pod"
+    gpu_type: GTX1080
+
+    #token streaming
+    token_streaming: <streamingtoken>
+
+    #page size
+    rest_page_size: 16 #or 12
+
+    host_redirect: <urlredirection>
+    handle_redirection: true #en cas de redirection d'une adresse vers pod

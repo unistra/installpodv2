@@ -1,0 +1,18 @@
+{% load staticfiles %}
+{% load i18n %}
+{% spaceless %}
+<div class="container container-pod">
+{% if request.user.is_superuser or user.owner.is_manager %}
+<p class="float-right">
+
+<a href="#">Haut de page</a>
+</p>
+{% endif %}
+<p class="hidden-pod" style="text-align:center">{{TITLE_SITE}} - {{TITLE_ETB}} - <a href="https://github.com/EsupPortail/Esup-Pod/releases/tag/{{VERSION}}" target="_blank" title="GitHub">{% trans "Release" %} {{VERSION}}</a>  
+{% if request.user.is_superuser or user.owner.is_manager %}
+- {{VIDEOS_COUNT}} {% trans "videos availables" %} [ {{VIDEOS_DURATION}} ]
+{% endif %}
+
+</p>
+</div>
+{% endspaceless %}

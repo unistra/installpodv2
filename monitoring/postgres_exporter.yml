@@ -1,0 +1,41 @@
+---
+- hosts: postgres_exporters
+  remote_user: root
+  gather_facts: no
+  vars:
+    postgres_exporter_version: 0.4.7
+    postgres_exporter_url: https://github.com/Lusitaniae/postgres_exporter/releases/download/v<VERSION>/postgres_exporter-<VERSION>.linux-amd64.tar.gz
+    pg_database: jalios
+    pg_user: jalios
+    pg_host: localhost
+    pg_port: 5432
+  vars_prompt:
+    - name: pg_pass
+      prompt: "Prometheus postgres password"
+      private: yes
+  tasks:
+  
+  - name: Create systemd unit
+    copy:
+      dest: /etc/systemd/system/postgres_exporter.service
+      content: |
+        [Unit]
+        Environment=DATA_SOURCE_NAME=postgresql://{{ pg_user }}:{{ pg_pass }}@{{ pg_host }}:{{ pg_port }}/{{ pg_database }}?sslmode=disable
+        Description=Postgres Exporter
+        Wants=network-online.target
+        After=network-online.target
+
+        [Service]
+        Type=simple
+        ExecStart=/usr/local/bin/postgres_exporter
+
+        [Install]
+        WantedBy=multi-user.target
+    register: service
+
+  - name: Reload systemd
+    when: service.changed
+    systemd: { daemon_reload: yes }
+
+  - name: Start exporter
+    service: { name: postgres_exporter, state: started }

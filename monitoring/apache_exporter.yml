@@ -1,0 +1,47 @@
+---
+- hosts: apache_exporters
+  remote_user: root
+  gather_facts: no
+  vars:
+    apache_exporter_version: 0.6.0
+    apache_exporter_url: https://github.com/Lusitaniae/apache_exporter/releases/download/v<VERSION>/apache_exporter-<VERSION>.linux-amd64.tar.gz
+  tasks:
+  - name: Retrieve apache exporter
+    unarchive:
+      src: "{{ apache_exporter_url|regex_replace('<VERSION>', apache_exporter_version) }}"
+      dest: /tmp/
+      remote_src: yes
+      extra_opts:
+      - apache_exporter-{{ apache_exporter_version }}.linux-amd64/apache_exporter
+    register: unarchive
+
+  - name: Copy binary
+    when: unarchive.changed
+    command: >-
+      cp
+      /tmp/apache_exporter-{{ apache_exporter_version }}.linux-amd64/apache_exporter
+      /usr/local/bin/apache_exporter
+
+  - name: Create systemd unit
+    copy:
+      dest: /etc/systemd/system/apache_exporter.service
+      content: |
+        [Unit]
+        Description=Apache Exporter
+        Wants=network-online.target
+        After=network-online.target
+
+        [Service]
+        Type=simple
+        ExecStart=/usr/local/bin/apache_exporter
+
+        [Install]
+        WantedBy=multi-user.target
+    register: service
+
+  - name: Reload systemd
+    when: service.changed
+    systemd: { daemon_reload: yes }
+
+  - name: Start exporter
+    service: { name: apache_exporter, state: started }
